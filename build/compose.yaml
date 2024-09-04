@@ -1,9 +1,28 @@
 version: "3.9"
 services:
-  my-express:
+  api:
     image: test-api-container
     container_name: api-container
     build:
       context: ../src/api/
+    volumes:
+      - ../src/api/:/app
+    tty:  true
     ports:
       - "3000:3000"
+
+  db:
+    image: postgres:16
+    container_name: postgres-container
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - db_data:/var/lib/posrgresql/data
+      - ../src/db:/docker-entrypoint-initdb.d
+
+volumes:
+  db_data: {}

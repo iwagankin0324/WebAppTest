@@ -1,19 +1,24 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-/**
- * サーバ起動
- */
-const server = app.listen(3000, function () {
-  console.log('🚀 app started. port:' + server.address().port)
+// PostgreSQLの設定
+const { Pool } = require('pg')
+const pool = new Pool({
+  user: 'postgres',
+  host: 'postgres-container',
+  database: 'postgres',
+  password: 'password',
+  port: 5432,
 })
 
-/**
- * GET /test
- */
-app.get('/test', async function (req, res, next) {
-  // console.log('/test called')
-  res.send('/test called /n')
-})
+// ルーティングの設定
+app.get('/', async(req, res) => {
+  const { rows } = await pool.query('select * from users')
+  res.send(rows)
+});
 
-// 参考： https://qiita.com/hinaqiita/items/a6e4f3f63fe689873c01
+const port = 3000;
+
+app.listen(port, () => {
+    console.log(`server started on port ${port}`);
+}); 
