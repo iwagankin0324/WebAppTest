@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  my-express:
+    image: test-api-container
+    container_name: api-container
+    build:
+      context: ../src/api/
+    ports:
+      - "3000:3000"
