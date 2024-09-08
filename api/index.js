@@ -17,7 +17,7 @@ app.get('/', async(req, res) => {
   res.send(rows)
 });
 
-const port = 3000;
+const port = 8000;
 
 app.listen(port, () => {
     console.log(`server started on port ${port}`);

@@ -1,0 +1,7 @@
+# ローカル練習環境
+ui/test
+
+# 
+ui/nextjs-project/node_modules
+ui/nextjs-project/package-lock.json
+ 

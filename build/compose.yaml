@@ -1,15 +1,24 @@
-version: "3.9"
 services:
-  api:
-    image: test-api-container
-    container_name: api-container
+  nextjs:
+    image: test-ui
+    container_name: ui-container
     build:
-      context: ../src/api/
-    volumes:
-      - ../src/api/:/app
-    tty:  true
+      context: ../ui
     ports:
       - "3000:3000"
+    volumes:
+      - ../ui:/ui
+      
+  api:
+    image: test-api
+    container_name: api-container
+    build:
+      context: ../api/
+    volumes:
+      - ../api/:/app
+    tty:  true
+    ports:
+      - "8000:8000"
 
   db:
     image: postgres:16
@@ -22,7 +31,7 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - db_data:/var/lib/posrgresql/data
-      - ../src/db:/docker-entrypoint-initdb.d
+      - ../db:/docker-entrypoint-initdb.d
 
 volumes:
   db_data: {}
